@@ -11,6 +11,8 @@ O **Sistema de Agendamento de Salas de Reunião** permite que os usuários reali
 - [Vue 3](https://vuejs.org/)
 - [Quasar Framework](https://quasar.dev/)
 - [FullCalendar](https://fullcalendar.io/) (Visualização do Calendário)
+- [Axios](https://axios-http.com/docs/intro/) (Integração com Backend em Express)
+- [Pinia](https://pinia.vuejs.org) (Gerenciamento de Estado)
 
 ### 📌 **Backend**
 - [Node.js](https://nodejs.org/)
@@ -27,7 +29,7 @@ O **Sistema de Agendamento de Salas de Reunião** permite que os usuários reali
 
 ### 📥 **1. Clonando o Repositório**
 ```sh
-  git clone https://github.com/usuario/repositorio.git
+  git clone https://github.com/pedromends/distrimed-agenda.git
   cd repositorio
 ```
 
@@ -39,7 +41,7 @@ O **Sistema de Agendamento de Salas de Reunião** permite que os usuários reali
 ```
 #### 📌 Frontend
 ```sh
-  cd frontend
+  cd distrimed-front
   npm install
 ```
 
@@ -47,11 +49,11 @@ O **Sistema de Agendamento de Salas de Reunião** permite que os usuários reali
 #### 📌 Backend
 ```sh
   cd backend
-  npm start
+  node server.js
 ```
 #### 📌 Frontend
 ```sh
-  cd frontend
+  cd distrimed-front
   quasar dev
 ```
 
@@ -65,19 +67,16 @@ O **Sistema de Agendamento de Salas de Reunião** permite que os usuários reali
 - 📌 `src/router/` - Definição das rotas Vue Router
 - 📌 `src/store/` - Gerenciamento de estado com Pinia
 - 📌 `src/layouts/` - Layouts principais do Quasar
+- 📌 `src/services/` - Implementação das rotas a partir do Axios
 
 ### 📁 **Backend** (`/backend`)
 - 📌 `server.js` - Arquivo principal do servidor Express
-- 📌 `routes/` - Definição das rotas API REST
-- 📌 `controllers/` - Lógica das funcionalidades da API
-- 📌 `database/` - Configuração e manipulação do banco de dados SQLite
-
 ---
 
 ## 🛠️ Funcionalidades Implementadas
 
 ### 🔑 **Autenticação**
-✅ Simulação de login sem autenticação real.
+✅ Simulação de login com autenticação por email e senha.
 
 ### 🏢 **Gestão de Salas**
 ✅ Listagem das três salas de reunião.
@@ -109,25 +108,51 @@ O **Sistema de Agendamento de Salas de Reunião** permite que os usuários reali
 ### 📌 **Endpoints**
 | Método | Rota | Descrição |
 |---------|------|-------------|
-| GET | `/salas` | Lista todas as salas disponíveis. |
-| GET | `/agendamentos` | Lista todas as reuniões agendadas. |
-| POST | `/agendar` | Cria um novo agendamento. |
-| DELETE | `/cancelar/:id` | Cancela uma reunião pelo ID. |
+| GET | `/get-by-email` | Recupera ID no usuário com base no email. |
+| GET | `/meetings` | Lista todas as reuniões agendadas. |
+| POST | `/meetings` | Atualiza de uma só vez todas as alterações realizadas no calendário. |
+| POST | `/login` | Autentica usuário no Banco de Dados com base em email e senha. |
+| POST | `/register` | Registra novo usuário no banco de dados. |
 
 ---
 
-## 🏆 Critérios de Avaliação Atendidos
+## 🏆 Critérios de Avaliação Requisitados
 ✅ **Código Limpo e Bem Estruturado**
 ✅ **Uso correto do Quasar e Vue 3**
 ✅ **API REST organizada e bem estruturada**
-✅ **Interface intuitiva e responsiva**
+✅ **Interface intuitiva e amigável**
 ✅ **Calendário interativo bem integrado**
 ✅ **README detalhado (este documento)**
 
 ---
 
-## 🔗 Link do Repositório
-[🔗 GitHub - Repositório do Projeto](https://github.com/usuario/repositorio)
+# Imagens do sistema
 
-📌 **Criado por:** [Seu Nome] 🎯
+Aqui estão algumas imagens inseridas no Markdown:
+
+### Imagem 1: Landing Page
+<img src="./demo/1.png" alt="Paisagem" width="600" />
+
+### Imagem 2: Salas Disponíveis
+<img src="./demo/2.png" alt="Logo" width="500" />
+
+### Imagem 3: Agenda da Sala 1
+<img src="./demo/3.png" alt="Arte Abstrata" width="700" />
+
+### Imagem 4: Editar evento existente
+<img src="./demo/4.png" alt="Arte Abstrata" width="400" />
+
+### Imagem 5: Eventos de 1 determinado dia
+<img src="./demo/5.png" alt="Arte Abstrata" width="400" />
+
+### Imagem 6: Criação de evento
+<img src="./demo/6.png" alt="Arte Abstrata" width="400" />
+
+
+
+
+## 🔗 Link do Repositório
+[🔗 GitHub - Repositório do Projeto](https://github.com/pedromends/distrimed-agenda.git)
+
+📌 **Criado por** João Pedro Souza 🎯
 

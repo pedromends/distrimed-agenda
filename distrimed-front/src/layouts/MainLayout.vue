@@ -1,17 +1,17 @@
 <template>
     <q-layout view="lHh Lpr lFf">
         <q-header elevated>
-            <q-toolbar>
+            <q-toolbar class="bg-red">
                 <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
-                <q-toolbar-title> Agenda Distrimed </q-toolbar-title>
+                <q-toolbar-title> Agenda </q-toolbar-title>
             </q-toolbar>
         </q-header>
 
-        <q-drawer v-model="leftDrawerOpen" bordered>
+        <q-drawer v-model="leftDrawerOpen" bordered class="">
             <q-list>
                 <div class="flex column justify-between" style="height: 100vh;">
                     <div>
-                        <h6 class="q-pl-md">Salas disponíveis:</h6>
+                        <h6 class="q-pl-md q-pt-md">Salas disponíveis:</h6>
                         <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
                     </div>
                     <div class="flex justify-center">
@@ -20,7 +20,6 @@
                 </div>
             </q-list>
         </q-drawer>
-
         <q-page-container>
             <router-view />
         </q-page-container>

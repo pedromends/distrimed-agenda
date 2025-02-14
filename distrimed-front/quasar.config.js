@@ -29,8 +29,12 @@ export default defineConfig((/* ctx */) => {
       open: true, // opens browser window automatically
     },
     framework: {
-      config: {},
-      plugins: [],
+      config: {
+        notify: 'String', /* look at QuasarConfOptions from the API card */
+      },
+      plugins: [
+        'Notify'
+      ],
     },
     animations: [],
     ssr: {

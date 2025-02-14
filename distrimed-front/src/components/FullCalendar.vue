@@ -1,13 +1,12 @@
 <template>
     <div class="relative">
-
         <div class="q-pa-md">
             <div class="flex justify-between">
                 <h5>{{ pageTitle }}</h5>
                 <div class="flex">
                     <q-spinner class="absolute" v-if="loading" style="right: 0%;" color="primary" size="3em"
                         :thickness="10" />
-                    <q-btn label="Salvar alterações" color="primary" @click="finishChanges" />
+                    <q-btn label="Salvar alterações" color="red" @click="finishChanges" />
                 </div>
             </div>
             <FullCalendar :options="calendarOptions" class="q-mt-md" />
@@ -66,6 +65,7 @@
     import { useCounterStore } from '../stores/example-store.js'
     import { saveAllData, getByEmail } from '../services/MeetingsService.js'
     import { nextTick } from 'vue';
+    import { Notify } from 'quasar'
 
     export default {
         name: 'FullCalendarComponent',
@@ -109,7 +109,12 @@
                 saveAllData(this.calendarOptions.events).then((response) => {
                     console.log(response)
                     this.loading = false
-                    alert('salvo com sucesso')
+                    Notify.create({
+                        message: 'Salvo com sucesso!',
+                        color: 'success',
+                        icon: 'check_circle'
+                    });
+                    window.location.reload()
                 }).catch(error => {
                     console.error("Erro ao buscar reuniões:", error);
                 });
@@ -121,7 +126,7 @@
                 this.selectedDate.setDate(this.selectedDate.getDate() + 1);
 
                 if (this.selectedDate < today.setHours(0, 0, 0, 0)) {
-                    alert('Não é possível agendar eventos em datas passadas.');
+                    Notify.create('Não é possível agendar eventos em datas passadas!')
                 } else {
                     this.eventTitle = '';
                     this.eventDate = info.dateStr;
@@ -146,30 +151,48 @@
                 const movedEvent = info.event;
                 const newStart = new Date(movedEvent.start);
                 const newEnd = movedEvent.end ? new Date(movedEvent.end) : new Date(newStart.getTime() + 60 * 60 * 1000);
+
+                // Verifica conflitos com outros eventos
                 const hasConflict = this.eventsProp
-                    .filter(event => event.id !== movedEvent.id)
+                    .filter(event => event.id !== movedEvent.id) // Não verifica conflito consigo mesmo
                     .some(event => {
                         const eventStart = new Date(event.start);
                         const eventEnd = event.end ? new Date(event.end) : new Date(eventStart.getTime() + 60 * 60 * 1000);
-                        return newStart < eventEnd && newEnd > eventStart;
+
+                        // Verifica se há sobreposição de horários
+                        return (newStart < eventEnd && newEnd > eventStart);
                     });
 
                 if (hasConflict) {
-                    alert('A sala já está reservada neste horário.');
+                    Notify.create({
+                        message: 'A sala já está reservada neste horário!',
+                        color: 'negative',
+                        icon: 'warning'
+                    });
                     info.revert();
                     return;
                 }
 
+                // Caso não haja conflito, atualiza as datas de início e fim do evento
                 movedEvent.setStart(newStart);
                 movedEvent.setEnd(newEnd);
             },
+
             saveNewEvent() {
                 if (!this.eventTitle) {
-                    alert('Por favor, preencha o nome do evento.');
+                    Notify.create({
+                        message: 'Por favor, preencha o nome do evento!',
+                        color: 'negative',
+                        icon: 'warning'
+                    });
                     return;
                 }
                 if (!this.selectedDate) {
-                    alert('Erro: Data do evento não definida.');
+                    Notify.create({
+                        message: 'Erro: Data do evento não definida!',
+                        color: 'negative',
+                        icon: 'warning'
+                    });
                     return;
                 }
 
@@ -177,7 +200,11 @@
                 const [endH, endM] = this.endHour ? this.endHour.split(':').map(Number) : [];
 
                 if (startH === undefined || endH === undefined) {
-                    alert('Erro: Horário inválido.');
+                    Notify.create({
+                        message: 'Erro: Horário inválido!',
+                        color: 'negative',
+                        icon: 'warning'
+                    });
                     return;
                 }
 
@@ -188,7 +215,11 @@
                 newEventEnd.setHours(endH, endM);
 
                 if (newEventEnd <= newEventStart) {
-                    alert('A hora de término deve ser posterior à hora de início.');
+                    Notify.create({
+                        message: 'A hora de término deve ser posterior à hora de início!',
+                        color: 'negative',
+                        icon: 'warning'
+                    });
                     return;
                 }
 
@@ -200,7 +231,11 @@
                 });
 
                 if (hasConflict) {
-                    alert('A sala já está reservada neste horário.');
+                    Notify.create({
+                        message: 'A sala já está reservada neste horário!',
+                        color: 'negative',
+                        icon: 'warning'
+                    });
                     return;
                 }
 
@@ -233,7 +268,11 @@
                     const newEndDate = new Date(this.eventDate + 'T' + this.endHour)
 
                     if (newEndDate <= newStartDate) {
-                        alert('A hora de término deve ser posterior à hora de início.')
+                        Notify.create({
+                            message: 'A hora de término deve ser posterior à hora de início!',
+                            color: 'negative',
+                            icon: 'warning'
+                        });
                         return
                     }
 
@@ -248,7 +287,11 @@
                     }
                     this.editDialog = false
                 } else {
-                    alert('Por favor, preencha todos os campos.')
+                    Notify.create({
+                        message: 'Por favor, preencha todos os campos!',
+                        color: 'negative',
+                        icon: 'warning'
+                    });
                 }
             },
             deleteEvent() {
@@ -257,7 +300,11 @@
                 if (!this.selectedEvent) return;
 
                 if (this.selectedEvent._def.extendedProps.email !== store.userId) {
-                    alert('Você não tem permissão para excluir este evento.');
+                    Notify.create({
+                        message: 'Você não tem permissão para excluir este evento!',
+                        color: 'negative',
+                        icon: 'warning'
+                    });
                     return;
                 }
 
@@ -267,9 +314,6 @@
 
                 this.editDialog = false;
             },
-            getUserByEmail() {
-
-            }
         }
     }
 </script>
