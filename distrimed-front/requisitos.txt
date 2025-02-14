@@ -1,0 +1,55 @@
+
+Teste Técnico – Desenvolvedor Vue3, Quasar e Node.js (Express)
+Objetivo
+Criar um sistema de agendamento de salas de reunião para uma empresa, permitindo que os usuários façam login e reservem uma das três salas disponíveis. O sistema deve ter uma interface clara e intuitiva, além de uma API organizada e funcional.
+________________________________________
+Requisitos do Sistema
+1. Funcionalidades principais
+✅ Login de usuário (não precisa autenticação real, pode ser um mock/simulação). (PRONTO)
+✅ Listagem de três salas disponíveis para agendamento. (PRONTO)
+✅ Interface para agendar uma reunião escolhendo: (PRONTO)
+•	Sala desejada. (PRONTO)
+•	Data e horário de início. (PRONTO)
+•	Data de término. (PRONTO)
+
+✅ Validações:
+•	Não permitir agendamento caso a sala já esteja reservada no horário desejado. (PRONTO)
+•	Não permitir agendamentos no passado. (PRONTO)
+•	Adicionais
+✅ Listagem de reuniões agendadas. (PRONTO)
+✅ Visualização de agendamentos em um calendário interativo. (PRONTO)
+
+✅ Cancelamento de uma reunião (somente pelo usuário que criou a reserva).
+________________________________________
+2. Requisitos técnicos
+•	Frontend: Vue 3 com Quasar Framework. (PRONTO)
+•	Backend: API REST com Node.js e Express. (PRONTO)
+•	Banco de Dados: SQLite ou um JSON temporário para armazenar os agendamentos. (PRONTO)
+•	Hospedagem do código: O código deve ser versionado e enviado para um repositório público no GitHub. (PRONTO)
+________________________________________
+3. Validações Obrigatórias
+1.	Evitar conflitos de horários – Um usuário não pode reservar uma sala caso ela já esteja ocupada no horário desejado. (PRONTO)
+2.	Datas e horários coerentes – O horário de início deve ser anterior ao horário de término. (PRONTO)
+3.	Agendamento futuro – Não permitir reservas para horários passados. (PRONTO)
+5.  Não permitir agendamento caso a sala já esteja reservada no horário desejado (PRONTO)
+
+4.	Cancelamento restrito – Somente o usuário que criou a reserva pode cancelá-la.
+________________________________________
+4. Critérios de Avaliação
+📌 Código Limpo e Bem Estruturado – Organização, boas práticas e clareza.
+📌 Uso correto do Quasar e Vue 3 – Implementação de componentes e reutilização adequada.
+📌 API REST organizada – Implementação de rotas bem definidas no Express.
+📌 Interface intuitiva e funcional – UX amigável
+📌 Responsivo – Não obrigatório.
+📌 Calendário bem integrado – Implementação de um calendário interativo para visualizar reservas.
+📌 README completo – Explicação clara sobre instalação e uso do sistema.
+________________________________________
+5. Entrega do Projeto
+1.	Criar um repositório público no GitHub.
+2.	Implementar todas as funcionalidades e validações descritas.
+3.	No arquivo README.md, incluir:
+o	Introdução sobre o sistema.
+o	Tecnologias utilizadas.
+o	Como rodar o projeto localmente.
+o	Estrutura do código (principais diretórios e arquivos).
+4.	Enviar o link do repositório para avaliação.
