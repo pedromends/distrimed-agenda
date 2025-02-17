@@ -108,11 +108,13 @@ O **Sistema de Agendamento de Salas de Reunião** permite que os usuários reali
 ### 📌 **Endpoints**
 | Método | Rota | Descrição |
 |---------|------|-------------|
-| GET | `/get-by-email` | Recupera ID no usuário com base no email. |
-| GET | `/meetings` | Lista todas as reuniões agendadas. |
-| POST | `/meetings` | Atualiza de uma só vez todas as alterações realizadas no calendário. |
+| POST | `/meetings` | Insere no banco o registro de uma nova reunião. |
 | POST | `/login` | Autentica usuário no Banco de Dados com base em email e senha. |
 | POST | `/register` | Registra novo usuário no banco de dados. |
+| PUT | `/meetings` | Atualiza usuário no banco de dados. |
+| GET | `/get-by-email` | Recupera ID no usuário com base no email. |
+| GET | `/meetings` | Lista todas as reuniões agendadas. |
+| DELETE | `/meetings` | Deleta uma reunião no banco de dados. |
 
 ---
 
@@ -128,25 +130,23 @@ O **Sistema de Agendamento de Salas de Reunião** permite que os usuários reali
 
 # Imagens do sistema
 
-Aqui estão algumas imagens inseridas no Markdown:
-
 ### Imagem 1: Landing Page
 <img src="./demo/1.png" alt="Paisagem" width="600" />
 
 ### Imagem 2: Salas Disponíveis
-<img src="./demo/2.png" alt="Logo" width="500" />
+<img src="./demo/2.png" alt="Logo" width="600" />
 
 ### Imagem 3: Agenda da Sala 1
 <img src="./demo/3.png" alt="Arte Abstrata" width="700" />
 
 ### Imagem 4: Editar evento existente
-<img src="./demo/4.png" alt="Arte Abstrata" width="400" />
+<img src="./demo/4.png" alt="Arte Abstrata" width="500" />
 
 ### Imagem 5: Eventos de 1 determinado dia
-<img src="./demo/5.png" alt="Arte Abstrata" width="400" />
+<img src="./demo/5.png" alt="Arte Abstrata" width="500" />
 
 ### Imagem 6: Criação de evento
-<img src="./demo/6.png" alt="Arte Abstrata" width="400" />
+<img src="./demo/6.png" alt="Arte Abstrata" width="500" />
 
 
 
