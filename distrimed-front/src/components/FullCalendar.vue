@@ -267,56 +267,76 @@
 				});
 			},
 			handleEventDrop(info) {
+				const movedEvent = info.event;
 
-				const movedEvent = info.event
-
-				const newStart = new Date(movedEvent.start + 1)
+				// Garante que as novas datas estão corretas
+				const newStart = new Date(movedEvent.start);
 				const newEnd = movedEvent.end
 					? new Date(movedEvent.end)
-					: new Date(newStart.getTime() + 60 * 60 * 1000)
+					: new Date(newStart.getTime() + 60 * 60 * 1000); // Duração padrão de 1h, se não houver end definido
 
+				// Impede que eventos sejam movidos para datas anteriores ao dia atual
+				const today = new Date();
+				today.setHours(0, 0, 0, 0); // Define o início do dia atual
+
+				if (newStart < today) {
+					Notify.create({
+						message: "Não é possível agendar eventos no passado!",
+						color: "negative",
+						icon: "warning",
+					});
+					info.revert();
+					return;
+				}
+
+				// Verifica se há conflito de horário com outros eventos
 				const hasConflict = this.eventsProp
-					.filter((event) => event.id !== movedEvent.id)
+					.filter((event) => event.id !== movedEvent.id) // Ignora o evento que está sendo movido
 					.some((event) => {
-						const eventStart = new Date(event.start)
+						const eventStart = new Date(event.start);
 						const eventEnd = event.end
 							? new Date(event.end)
-							: new Date(eventStart.getTime() + 60 * 60 * 1000)
+							: new Date(eventStart.getTime() + 60 * 60 * 1000); // Duração padrão de 1h
 
-						return newStart < eventEnd && newEnd > eventStart
-					})
+						return newStart < eventEnd && newEnd > eventStart;
+					});
 
 				if (hasConflict) {
 					Notify.create({
-						message: 'A sala já está reservada neste horário!',
-						color: 'negative',
-						icon: 'warning',
-					})
-					info.revert()
-					return
+						message: "A sala já está reservada neste horário!",
+						color: "negative",
+						icon: "warning",
+					});
+					info.revert();
+					return;
 				}
 
-				movedEvent.setStart(newStart)
-				movedEvent.setEnd(newEnd)
-				movedEvent._def.start = movedEvent.start
-				movedEvent._def.end = movedEvent.end
+				// Atualiza as novas datas do evento
+				movedEvent.setStart(newStart);
+				movedEvent.setEnd(newEnd);
+				movedEvent._def.start = movedEvent.start;
+				movedEvent._def.end = movedEvent.end;
 
-				updateMeeting(movedEvent._def).then((response) => {
-					console.log(response.status);
-					Notify.create({
-						message: 'Atualizado com sucesso!',
-						color: 'success',
-						icon: 'check_circle',
-					});
-				}).catch((error) => {
+				// Salva a atualização no banco
+				updateMeeting(movedEvent._def)
+					.then((response) => {
+						console.log(response.status);
+						Notify.create({
+							message: "Atualizado com sucesso!",
+							color: "success",
+							icon: "check_circle",
+						});
+					})
+					.catch((error) => {
 						console.error(error);
 						Notify.create({
-							message: 'Erro ao atualizar reunião!',
-							color: 'negative',
-							icon: 'check_circle',
+							message: "Erro ao atualizar reunião!",
+							color: "negative",
+							icon: "error",
 						});
 					});
 			},
+
 			deleteEvent() {
 				const store = useCounterStore()
 				if (!this.selectedEvent) return
